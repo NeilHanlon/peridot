@@ -59,6 +59,7 @@ func init() {
 
 	root.AddCommand(project)
 	project.AddCommand(projectCreateHashedRepos)
+	project.AddCommand(projectCancelBuild)
 
 	viper.SetEnvPrefix("PERIDOT")
 	viper.AutomaticEnv()
