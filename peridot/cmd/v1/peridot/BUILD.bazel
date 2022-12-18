@@ -1,5 +1,15 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
+load(
+    "@rules_pkg//pkg:mappings.bzl",
+    "pkg_attributes",
+    "pkg_filegroup",
+    "pkg_files",
+    "pkg_mkdirs",
+    "pkg_mklink",
+)
+load("@rules_pkg//pkg:rpm_pfg.bzl", "pkg_rpm")
+
 go_library(
     name = "peridot_lib",
     srcs = [
@@ -31,4 +41,26 @@ go_binary(
     name = "peridot",
     embed = [":peridot_lib"],
     visibility = ["//visibility:public"],
+)
+
+pkg_files(
+  name = "peridot-files",
+  srcs = [":peridot"],
+  attributes = pkg_attributes(
+    user = "root",
+    group = "root",
+    mode = "0755",
+  ),
+  prefix = "/usr/bin"
+)
+
+pkg_rpm(
+    name = "peridot-cli",
+    srcs = [":peridot-files"],
+    license = "MIT",
+    summary = "Peridot Command Line Interface",
+    version = "0.1.0",
+    release = "0",
+    description = "A command line interface to interact with the Peridot build system",
+    source_date_epoch = 0,
 )
