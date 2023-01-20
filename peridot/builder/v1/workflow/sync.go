@@ -526,7 +526,7 @@ func processGroupInstallScopedPackageOptions(tx peridotdb.Access, req *peridotpb
 		}
 
 		for _, dbPkg := range dbPkgs {
-			err = tx.SetGroupInstallOptionsForPackage(req.ProjectId.Value, dbPkg.Name, scopedPackage.DependsOn)
+			err = tx.SetGroupInstallOptionsForPackage(req.ProjectId.Value, dbPkg.Name, scopedPackage.DependsOn, scopedPackage.EnableModule, scopedPackage.DisableModule)
 			if err != nil {
 				return nil, fmt.Errorf("failed to set scoped package options for package %s", scopedPackage.Name)
 			}
@@ -568,6 +568,9 @@ func kindCatalogGroupInstallOptions(tx peridotdb.Access, req *peridotpb.SyncCata
 			return nil, fmt.Errorf("failed to parse build groupinstall options: %w", err)
 		}
 		err = tx.SetBuildRootPackages(req.ProjectId.Value, srpmPackages, buildPackages)
+		if err != nil {
+			return nil, fmt.Errorf("failed to set buildroot packages for project: %w", err)
+		}
 
 		ret.SrpmPackages = append(ret.SrpmPackages, srpmPackages...)
 		ret.BuildPackages = append(ret.BuildPackages, buildPackages...)

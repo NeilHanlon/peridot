@@ -46,7 +46,7 @@ type Access interface {
 	CreateProject(project *peridotpb.Project) (*models.Project, error)
 	UpdateProject(id string, project *peridotpb.Project) (*models.Project, error)
 	SetProjectKeys(projectId string, username string, password string) error
-	SetBuildRootPackages(projectId string, srpmPackages []string, buildPackages []string) error
+	SetBuildRootPackages(projectId string, srpmPackages pq.StringArray, buildPackages pq.StringArray) error
 
 	CreateBuild(packageId string, packageVersionId string, taskId string, projectId string) (*models.Build, error)
 	GetArtifactsForBuild(buildId string) (models.TaskArtifacts, error)
@@ -101,7 +101,7 @@ type Access interface {
 	GetPackageID(name string) (string, error)
 	SetExtraOptionsForPackage(projectId string, packageName string, withFlags pq.StringArray, withoutFlags pq.StringArray) error
 	GetExtraOptionsForPackage(projectId string, packageName string) (*models.ExtraOptions, error)
-	SetGroupInstallOptionsForPackage(projectId string, packageName string, dependsOn pq.StringArray) error
+	SetGroupInstallOptionsForPackage(projectId string, packageName string, dependsOn pq.StringArray, enableModule pq.StringArray, disableModule pq.StringArray) error
 	SetPackageType(projectId string, packageName string, packageType peridotpb.PackageType) error
 
 	CreateTask(user *utils.ContextUser, arch string, taskType peridotpb.TaskType, projectId *string, parentTaskId *string) (*models.Task, error)
