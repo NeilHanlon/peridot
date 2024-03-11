@@ -76,6 +76,7 @@ replace (
 
 // sync-replace-start
 replace (
+	peridot.resf.org/apollo/pb => ./bazel-bin/apollo/proto/v1/apollopb_go_proto_/peridot.resf.org/apollo/pb
 	bazel.build/protobuf => ./bazel-bin/build/bazel/protobuf/bazelbuild_go_proto_/bazel.build/protobuf
 	bazel.build/remote/execution/v2 => ./bazel-bin/build/bazel/remote/execution/v2/remoteexecution_go_proto_/bazel.build/remote/execution/v2
 	bazel.build/semver => ./bazel-bin/build/bazel/semver/semver_go_proto_/bazel.build/semver
